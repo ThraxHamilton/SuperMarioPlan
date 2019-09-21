@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
+import { createProject } from '../store/actions/projectActions'
+import { connect } from 'react-redux'
 
-export default class CreateProject extends Component {
+class CreateProject extends Component {
     state = {
-        title:'',
-        content:''
+        title: '',
+        content: ''
     }
 
     // create function to HANDLE CHANGE/monitor whenever user types anything on form
     handleChange = (e) => {
         // console.log(e)
         this.setState({
-            [e.target.id]: e.target.value 
+            [e.target.id]: e.target.value
         })
     }
-    
+
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state)
+        // console.log(this.state)
+        this.props.createProject(this.state);
     }
 
     render() {
@@ -33,9 +36,9 @@ export default class CreateProject extends Component {
                         <label htmlFor="content">Content</label>
                         <textarea id="content" className="materialize-textarea" onChange={this.handleChange}></textarea>
                     </div>
-                    
+
                     <div className="input-field">
-                    <button className="btn pink lighten-1 z-depth-0">Create</button>
+                        <button className="btn pink lighten-1 z-depth-0">Create</button>
                     </div>
                 </form>
             </div>
@@ -43,3 +46,10 @@ export default class CreateProject extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        createProject: (project) => dispatch(createProject(project))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(CreateProject)
