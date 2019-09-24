@@ -11,12 +11,13 @@ import { getFirestore, reduxFirestore } from 'redux-firestore'
 import { getFirebase, reactReduxFirebase} from 'react-redux-firebase'
 import fbConfig from './components/config/fbConfig'
 
-const store = createStore(rootReducer, 
-    compose (
-    applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore}))),
-    reduxFirestore(fbConfig),
-    reactReduxFirebase(fbConfig)
-    );
+const store = createStore(rootReducer,
+    compose(
+      applyMiddleware(thunk.withExtraArgument({getFirebase, getFirestore})),
+      reactReduxFirebase(fbConfig), // redux binding for firebase
+      reduxFirestore(fbConfig) // redux bindings for firestore
+    )
+  );
 
 ReactDOM.render(<Provider store= {store}><App /></Provider>, document.getElementById('root'));
 
